@@ -1,0 +1,93 @@
+[gd_scene load_steps=11 format=3 uid="uid://binvaay30wt8c"]
+
+[ext_resource type="Script" uid="uid://b1d2h26svgwm8" path="res://skeleton.gd" id="1_plk42"]
+[ext_resource type="Texture2D" uid="uid://bp4qwestsm7b7" path="res://Legacy Vania Pack - Village - Update 0.4/Mobs/Skeleton.png" id="2_r6xse"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sv33q"]
+size = Vector2(15, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_plk42"]
+atlas = ExtResource("2_r6xse")
+region = Rect2(0, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ymvsc"]
+atlas = ExtResource("2_r6xse")
+region = Rect2(32, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rwpf0"]
+atlas = ExtResource("2_r6xse")
+region = Rect2(64, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ew5mc"]
+atlas = ExtResource("2_r6xse")
+region = Rect2(64, 42, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vqc8v"]
+atlas = ExtResource("2_r6xse")
+region = Rect2(32, 42, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ft6oh"]
+atlas = ExtResource("2_r6xse")
+region = Rect2(0, 42, 32, 42)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x6jny"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_plk42")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ymvsc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rwpf0")
+}],
+"loop": true,
+"name": &"move",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ew5mc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vqc8v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ft6oh")
+}],
+"loop": true,
+"name": &"spawn",
+"speed": 5.0
+}]
+
+[node name="Skeleton" type="CharacterBody2D"]
+script = ExtResource("1_plk42")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -4.5)
+shape = SubResource("RectangleShape2D_sv33q")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(0.90625, 0.90625)
+sprite_frames = SubResource("SpriteFrames_x6jny")
+animation = &"move"
+autoplay = "idle"
+frame_progress = 0.6251804
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2.655, 2.655)
+position_smoothing_enabled = true
+
+[node name="Movement" type="Timer" parent="."]
