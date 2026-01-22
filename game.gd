@@ -1,24 +1,24 @@
 extends Node2D
 
-var lista_gravedades = ["abajo", "arriba", "izquierda", "derecha"]
+var grav_list = ["down", "up", "left", "right"]
 
-var previo = ""
+var prev  = ""
 func _on_timer_timeout() -> void:
-	var eleccion = lista_gravedades.pick_random()
-	while previo == eleccion:
-		eleccion = lista_gravedades.pick_random()
-	if eleccion != previo:
-		previo = eleccion
+	var elec = grav_list.pick_random()
+	while prev  == elec:
+		elec = grav_list.pick_random()
+	if elec != prev :
+		prev  = elec
 	
-	print("Cambiando gravedad a: " + eleccion)
+	print("Gravity: " + elec)
 	
-	$Skeleton.cambiar_gravedad_a(eleccion)
+	$Skeleton.grav_to(elec)
 	
-	var vector_fisicas = Vector2.DOWN
+	var phys_vector = Vector2.DOWN
 	
-	if eleccion == "abajo": vector_fisicas = Vector2.DOWN
-	elif eleccion == "arriba": vector_fisicas = Vector2.UP
-	elif eleccion == "derecha": vector_fisicas = Vector2.RIGHT
-	elif eleccion == "izquierda": vector_fisicas = Vector2.LEFT
+	if elec == "down": phys_vector = Vector2.DOWN
+	elif elec == "up": phys_vector = Vector2.UP
+	elif elec == "right": phys_vector = Vector2.RIGHT
+	elif elec == "left": phys_vector = Vector2.LEFT
 	
-	PhysicsServer2D.area_set_param(get_world_2d().space, PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR, vector_fisicas)
+	PhysicsServer2D.area_set_param(get_world_2d().space, PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR, phys_vector)

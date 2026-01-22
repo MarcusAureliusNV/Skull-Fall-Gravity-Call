@@ -1,90 +1,90 @@
 extends CharacterBody2D
 
-const VELOCIDAD = 120.0
-const SALTO_FUERZA = 220.0
-const GRAVEDAD_FUERZA = 700.0
+const SPEED = 120.0
+const JUMP_F = 220.0
+const GRAV = 700.0
 
-# gravedad inicial
-var direccion_gravedad = "abajo" 
+# initial gravity
+var grav_dir = "down" 
 
 @onready var anim: AnimatedSprite2D = %AnimatedSprite2D
 
 func _physics_process(delta):
 	
-	# --- GRAVEDAD SEGÚN DIRECCIÓN ---
-	if direccion_gravedad == "abajo":
-		velocity.y += GRAVEDAD_FUERZA * delta
-	elif direccion_gravedad == "arriba":
-		velocity.y -= GRAVEDAD_FUERZA * delta
-	elif direccion_gravedad == "derecha":
-		velocity.x += GRAVEDAD_FUERZA * delta
-	elif direccion_gravedad == "izquierda":
-		velocity.x -= GRAVEDAD_FUERZA * delta
+	# --- GRAVITY ---
+	if grav_dir == "down":
+		velocity.y += GRAV * delta
+	elif grav_dir == "up":
+		velocity.y -= GRAV * delta
+	elif grav_dir == "right":
+		velocity.x += GRAV * delta
+	elif grav_dir == "left":
+		velocity.x -= GRAV * delta
 
-	# --- SALTAR ---
+	# --- JUMP ---
 	if Input.is_action_just_pressed("up") and is_on_floor():
 		# Saltamos hacia el lado contrario de la gravedad
-		if direccion_gravedad == "abajo":
-			velocity.y = -SALTO_FUERZA
-		elif direccion_gravedad == "arriba":
-			velocity.y = SALTO_FUERZA
-		elif direccion_gravedad == "derecha":
-			velocity.x = -SALTO_FUERZA
-		elif direccion_gravedad == "izquierda":
-			velocity.x = SALTO_FUERZA
+		if grav_dir == "down":
+			velocity.y = -JUMP_F
+		elif grav_dir == "up":
+			velocity.y = JUMP_F
+		elif grav_dir == "right":
+			velocity.x = -JUMP_F
+		elif grav_dir == "left":
+			velocity.x = JUMP_F
 
-	# --- MOVIMIENTO ---
+	# --- MOVEMENT ---
 	var mov = Input.get_axis("left", "right")
 	
-	if direccion_gravedad == "abajo" or direccion_gravedad == "arriba":
+	if grav_dir == "down" or grav_dir == "up":
 		if mov:
-			velocity.x = mov * VELOCIDAD
+			velocity.x = mov * SPEED
 		else:
-			velocity.x = move_toward(velocity.x, 0, VELOCIDAD)
+			velocity.x = move_toward(velocity.x, 0, SPEED)
 			
-	elif direccion_gravedad == "izquierda":
+	elif grav_dir == "left":
 		if mov:
-			velocity.y = mov * VELOCIDAD
+			velocity.y = mov * SPEED
 		else:
-			velocity.y = move_toward(velocity.y, 0, VELOCIDAD)
+			velocity.y = move_toward(velocity.y, 0, SPEED)
 	
-	elif direccion_gravedad == "derecha":
+	elif grav_dir == "right":
 		if mov:
-			velocity.y = -mov * VELOCIDAD
+			velocity.y = -mov * SPEED
 		else:
-			velocity.y = move_toward(velocity.y, 0, VELOCIDAD)
+			velocity.y = move_toward(velocity.y, 0, SPEED)
 	
 	
-	# --- ANIMACIONES ---
+	# --- ANIMATIONS ---
 	if velocity.length() > 20:
 		anim.play("move")
-		if direccion_gravedad == "arriba":
+		if grav_dir == "up":
 			if mov > 0: anim.flip_h = false
 			elif mov < 0: anim.flip_h = true
 		else:
 			if mov > 0: anim.flip_h = true
 			elif mov < 0: anim.flip_h = false
 	else:
-		anim.stop() # no tengo todavía ninguna animación idle
+		anim.stop() # no idle animation yet
 
-	actualizar_rotacion()
+	rotate_sprite()
 
 	move_and_slide()
 
-func actualizar_rotacion():
-	if direccion_gravedad == "abajo":
+func rotate_sprite():
+	if grav_dir == "down":
 		rotation_degrees = 0
 		up_direction = Vector2.UP 
-	elif direccion_gravedad == "arriba":
+	elif grav_dir == "up":
 		rotation_degrees = 180
 		up_direction = Vector2.DOWN
-	elif direccion_gravedad == "derecha":
+	elif grav_dir == "right":
 		rotation_degrees = -90
 		up_direction = Vector2.LEFT
-	elif direccion_gravedad == "izquierda":
+	elif grav_dir == "left":
 		rotation_degrees = 90
 		up_direction = Vector2.RIGHT
 
-
-func cambiar_gravedad_a(nueva_direccion):
-	direccion_gravedad = nueva_direccion
+# function to import the new gravity from game.tscn
+func grav_to(n_dir):
+	grav_dir = n_dir
