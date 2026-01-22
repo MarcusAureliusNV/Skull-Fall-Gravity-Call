@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+# Movement constants
 const SPEED = 120.0
 const JUMP_F = 220.0
 const GRAV = 700.0
@@ -7,6 +8,7 @@ const GRAV = 700.0
 # initial gravity
 var grav_dir = "down" 
 
+# Changes the animated sprite name so it's shorter and waits until the game loaded to use it
 @onready var anim: AnimatedSprite2D = %AnimatedSprite2D
 
 func _physics_process(delta):
@@ -19,10 +21,10 @@ func _physics_process(delta):
 	elif grav_dir == "right":
 		velocity.x += GRAV * delta
 	elif grav_dir == "left":
-		velocity.x -= GRAV * delta
+		velocity.x -= GRAV * delta	# Depending on the array parameter value, it changes the velocity vector so the gravity swaps
 
 	# --- JUMP ---
-	if Input.is_action_just_pressed("up") and is_on_floor():
+	if Input.is_action_just_pressed("up") and is_on_floor():	# Makes it so it can only jump when grounded and pressing the assigned key
 		# Saltamos hacia el lado contrario de la gravedad
 		if grav_dir == "down":
 			velocity.y = -JUMP_F
@@ -31,10 +33,10 @@ func _physics_process(delta):
 		elif grav_dir == "right":
 			velocity.x = -JUMP_F
 		elif grav_dir == "left":
-			velocity.x = JUMP_F
+			velocity.x = JUMP_F	# "UP" changes depending on the gravity
 
 	# --- MOVEMENT ---
-	var mov = Input.get_axis("left", "right")
+	var mov = Input.get_axis("left", "right")	# Basic movement input
 	
 	if grav_dir == "down" or grav_dir == "up":
 		if mov:
@@ -53,25 +55,25 @@ func _physics_process(delta):
 			velocity.y = -mov * SPEED
 		else:
 			velocity.y = move_toward(velocity.y, 0, SPEED)
-	
+	# Upper lines changes the behaviour of the keys depending on the gravity. Right one is inverted so it feels better playing.
 	
 	# --- ANIMATIONS ---
-	if velocity.length() > 20:
-		anim.play("move")
+	if velocity.length():
+		anim.play("move")	# Looped until it doesn't move
 		if grav_dir == "up":
 			if mov > 0: anim.flip_h = false
-			elif mov < 0: anim.flip_h = true
+			elif mov < 0: anim.flip_h = true	# Flipping is inverted when gravity is going up, so I had to make another if
 		else:
 			if mov > 0: anim.flip_h = true
-			elif mov < 0: anim.flip_h = false
+			elif mov < 0: anim.flip_h = false	# Normal flipping for the rest of the gravities 
 	else:
 		anim.stop() # no idle animation yet
 
-	rotate_sprite()
+	rotate_sprite()	# Calls function, explained lower
 
 	move_and_slide()
 
-func rotate_sprite():
+func rotate_sprite():	# Uses degrees to rotate the sprite depending on the gravity
 	if grav_dir == "down":
 		rotation_degrees = 0
 		up_direction = Vector2.UP 
