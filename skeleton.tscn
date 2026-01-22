@@ -54,7 +54,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"move",
-"speed": 2.0
+"speed": 4.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -72,7 +72,13 @@ animations = [{
 }]
 
 [node name="Skeleton" type="CharacterBody2D"]
+collision_mask = 5
 script = ExtResource("1_plk42")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+ignore_rotation = false
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, -4.5)
@@ -84,10 +90,5 @@ scale = Vector2(0.90625, 0.90625)
 sprite_frames = SubResource("SpriteFrames_x6jny")
 animation = &"move"
 autoplay = "idle"
-frame_progress = 0.6251804
-
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2.655, 2.655)
-position_smoothing_enabled = true
 
 [node name="Movement" type="Timer" parent="."]

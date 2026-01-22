@@ -4,7 +4,7 @@ extends Node2D
 var grav_list = ["down", "up", "left", "right"] 
 
 
-var prev  = ""	#Declared to is isn't null and making it comparable
+var prev  = "down"	#Declared outside so it saves every time the timeout signals
 func _on_timer_timeout() -> void: # Signal from the Gravity Timer
 	var elec = grav_list.pick_random()	# Function to randomly take one element from the array
 	while prev  == elec:	# While to make sure it doesn't repeat, making the gravity last double

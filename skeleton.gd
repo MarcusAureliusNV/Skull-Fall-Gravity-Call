@@ -3,7 +3,7 @@ extends CharacterBody2D
 # Movement constants
 const SPEED = 120.0
 const JUMP_F = 220.0
-const GRAV = 700.0
+const GRAV = 600.0
 
 # initial gravity
 var grav_dir = "down" 
@@ -38,9 +38,15 @@ func _physics_process(delta):
 	# --- MOVEMENT ---
 	var mov = Input.get_axis("left", "right")	# Basic movement input
 	
-	if grav_dir == "down" or grav_dir == "up":
+	if grav_dir == "down":
 		if mov:
 			velocity.x = mov * SPEED
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
+			
+	elif grav_dir == "up":
+		if mov:
+			velocity.x = -mov * SPEED
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			
@@ -58,16 +64,12 @@ func _physics_process(delta):
 	# Upper lines changes the behaviour of the keys depending on the gravity. Right one is inverted so it feels better playing.
 	
 	# --- ANIMATIONS ---
-	if velocity.length():
+	if velocity.x != 0 && is_on_floor():
 		anim.play("move")	# Looped until it doesn't move
-		if grav_dir == "up":
-			if mov > 0: anim.flip_h = false
-			elif mov < 0: anim.flip_h = true	# Flipping is inverted when gravity is going up, so I had to make another if
-		else:
-			if mov > 0: anim.flip_h = true
-			elif mov < 0: anim.flip_h = false	# Normal flipping for the rest of the gravities 
+		if mov > 0: anim.flip_h = true
+		elif mov < 0: anim.flip_h = false	# Flipping the character sprite depending on direction
 	else:
-		anim.stop() # no idle animation yet
+		anim.play("idle") 
 
 	rotate_sprite()	# Calls function, explained lower
 
