@@ -3,13 +3,12 @@ extends CharacterBody2D
 const SPEED = 120.0
 const JUMP_F = 220.0
 const GRAV = 600.0
-const PUSH_FORCE = 50.0 # Tweak this number if it feels too heavy/light
+const PUSH_FORCE = 50.0
 
 var grav_dir = "down" 
 @onready var anim: AnimatedSprite2D = %AnimatedSprite2D
 
 func _physics_process(delta):
-	# --- GRAVITY & JUMP (Your existing code) ---
 	if grav_dir == "down": velocity.y += GRAV * delta
 	elif grav_dir == "up": velocity.y -= GRAV * delta
 	elif grav_dir == "right": velocity.x += GRAV * delta
@@ -24,7 +23,7 @@ func _physics_process(delta):
 	# --- MOVEMENT (Your existing code) ---
 	var mov = Input.get_axis("left", "right")
 	
-	# Store the intended move direction for pushing later
+	# Store the move direction for pushing later
 	var push_vector = Vector2.ZERO
 	
 	if grav_dir == "down":
@@ -59,19 +58,16 @@ func _physics_process(delta):
 	rotate_sprite()
 	move_and_slide()
 	
-	# --- NEW SIMPLE PUSHING LOGIC ---
+	# --- PUSHING LOGIC ---
 	# We check if we hit something AFTER moving
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var body = collision.get_collider()
 		
-		# If it's a Tomb (RigidBody) and we are actually trying to move (mov != 0)
 		if body is RigidBody2D and mov != 0:
-			# Push in the direction we are walking
 			body.apply_central_impulse(push_vector * PUSH_FORCE)
 
 func rotate_sprite():
-	# (Your existing rotation code)
 	if grav_dir == "down": rotation_degrees = 0; up_direction = Vector2.UP 
 	elif grav_dir == "up": rotation_degrees = 180; up_direction = Vector2.DOWN
 	elif grav_dir == "right": rotation_degrees = -90; up_direction = Vector2.LEFT

@@ -5,7 +5,7 @@ var grav_list = ["down", "up", "left", "right"]
 
 var prev  = "down"
 var score = 0          # Current frozen tombs
-var total_tombs = 6    # CHANGE THIS to the actual number of tombs in your level!
+var total_tombs = 6
 
 func _on_timer_timeout() -> void: 
 	var elec = grav_list.pick_random()
@@ -37,8 +37,10 @@ func add_point():
 	score += 1
 	print("Score: ", score)
 	
+	
+	# Not functional yet
 	if score >= total_tombs:
 		print("DOOR OPENED!")
 		# Here we find the door and delete it or disable collision
 		if has_node("Door"):
-			$Door.queue_free() # Poof, door is gone
+			$Door.queue_free() # door is gone
