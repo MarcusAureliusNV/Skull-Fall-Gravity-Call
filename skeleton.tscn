@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://binvaay30wt8c"]
+[gd_scene load_steps=12 format=3 uid="uid://binvaay30wt8c"]
 
 [ext_resource type="Script" uid="uid://b1d2h26svgwm8" path="res://skeleton.gd" id="1_plk42"]
 [ext_resource type="Texture2D" uid="uid://bp4qwestsm7b7" path="res://Legacy Vania Pack - Village - Update 0.4/Mobs/Skeleton.png" id="2_r6xse"]
@@ -71,12 +71,14 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plk42"]
+size = Vector2(17, 20)
+
 [node name="Skeleton" type="CharacterBody2D"]
 collision_mask = 5
 script = ExtResource("1_plk42")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-ignore_rotation = false
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
 
@@ -92,3 +94,9 @@ animation = &"move"
 autoplay = "idle"
 
 [node name="Movement" type="Timer" parent="."]
+
+[node name="PushingArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PushingArea"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_plk42")

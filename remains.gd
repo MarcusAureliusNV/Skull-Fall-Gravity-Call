@@ -1,9 +1,7 @@
 extends Area2D
 
-@onready var timer: Timer = $Timer
-
-
-func _on_area_entered(area: Area2D) -> void:
-	if is_in_group("Tombs"): 
+func _on_body_entered(body: Node2D):
+	# 1. Check if the body is a Tomb
+	if body.is_in_group("Tombs"):
+		var timer = body.get_node("TombTimer")
 		timer.start()
-		
