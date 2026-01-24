@@ -5,7 +5,7 @@ const JUMP_F = 220.0
 const GRAV = 600.0
 const PUSH_FORCE = 50.0
 
-var grav_dir = "down" 
+var grav_dir = "up" 
 @onready var anim: AnimatedSprite2D = %AnimatedSprite2D
 
 func _physics_process(delta):
@@ -20,7 +20,7 @@ func _physics_process(delta):
 		elif grav_dir == "right": velocity.x = -JUMP_F
 		elif grav_dir == "left": velocity.x = JUMP_F
 
-	# --- MOVEMENT (Your existing code) ---
+	# --- MOVEMENT ---
 	var mov = Input.get_axis("left", "right")
 	
 	# Store the move direction for pushing later
@@ -29,12 +29,12 @@ func _physics_process(delta):
 	if grav_dir == "down":
 		if mov: 
 			velocity.x = mov * SPEED
-			push_vector = Vector2(mov, 0) # Pushing Left or Right
+			push_vector = Vector2(mov, 0) # Pushing left or right, moving depends on mov
 		else: velocity.x = move_toward(velocity.x, 0, SPEED)
 	elif grav_dir == "up":
 		if mov: 
-			velocity.x = -mov * SPEED
-			push_vector = Vector2(-mov, 0)
+			velocity.x = mov * SPEED
+			push_vector = Vector2(mov, 0)
 		else: velocity.x = move_toward(velocity.x, 0, SPEED)
 	elif grav_dir == "left":
 		if mov: 

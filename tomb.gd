@@ -28,7 +28,7 @@ func grav_to(elec):
 	if freeze == true:
 		return
 	else:
-	# Simple rotation
+	# Simple rotation (includes collisions)
 		if elec == "down": rotation_degrees = 0
 		elif elec == "up": rotation_degrees = 180
 		elif elec == "right": rotation_degrees = -90
