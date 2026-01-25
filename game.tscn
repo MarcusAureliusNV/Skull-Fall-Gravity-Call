@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://b64y4quwuycfo"]
+[gd_scene load_steps=16 format=4 uid="uid://b64y4quwuycfo"]
 
 [ext_resource type="PackedScene" uid="uid://binvaay30wt8c" path="res://skeleton.tscn" id="1_80nbo"]
 [ext_resource type="Script" uid="uid://cs4stmjw71bbj" path="res://game.gd" id="1_feb5d"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://d3ykduwsa2f46" path="res://Tomb.tscn" id="4_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://c3ixhyryo6spb" path="res://door.tscn" id="6_eow3j"]
 [ext_resource type="PackedScene" uid="uid://cgfey8kkcqrc7" path="res://remains.tscn" id="6_ryrav"]
+[ext_resource type="PackedScene" uid="uid://brim3twoyngfv" path="res://win.tscn" id="7_eow3j"]
+[ext_resource type="PackedScene" uid="uid://bl6bxqbjj168m" path="res://ui.tscn" id="8_j5wjh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ryrav"]
 texture = ExtResource("2_e2o6t")
@@ -1022,4 +1024,32 @@ gravity_scale = 2.615
 wait_time = 3.0
 autostart = true
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI_tombs" parent="CanvasLayer" instance=ExtResource("8_j5wjh")]
+unique_name_in_owner = true
+offset_left = 8.0
+offset_top = 4.0
+offset_right = 8.0
+offset_bottom = 4.0
+
+[node name="Win_screen" parent="CanvasLayer" instance=ExtResource("7_eow3j")]
+unique_name_in_owner = true
+visible = false
+
+[node name="WhatNeeded" type="Label" parent="CanvasLayer"]
+offset_top = 60.0
+offset_right = 40.0
+offset_bottom = 83.0
+text = "What's left for adding:
+- A label to show the next gravity
+- Music
+- A better background
+- Actual death
+- Tombs rotating
+- Repairing Tomb-Pillar collision issue
+- That's all"
+
 [connection signal="timeout" from="Gravity Timer" to="." method="_on_timer_timeout"]
+
+[editable path="CanvasLayer/UI_tombs"]

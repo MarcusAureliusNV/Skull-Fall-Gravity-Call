@@ -4,9 +4,13 @@ extends Node2D
 var grav_list = ["down", "up", "left", "right"] 
 
 var prev  = "down"
-var score = 5 # Current frozen tombs
-var total_tombs = 6
+var score = 0 # Current frozen tombs
+var total_tombs = 8
 
+func _ready():
+	# initialize text when the game starts
+	ui_update()
+	
 func _on_timer_timeout() -> void: 
 	var elec = grav_list.pick_random()
 	while prev  == elec:
@@ -37,9 +41,16 @@ func _on_timer_timeout() -> void:
 func add_point():
 	score += 1
 	print("Score: ", score)
-	
+	ui_update()
 	if score >= total_tombs: # Functional door! 
 		print("Pillar Cleared!")
 		$Pillar/Visibility.visible = true
 		$Pillar.set_collision_layer_value(8, true) # So tombs can't pass through the door
 		$Pillar.set_collision_layer_value(1, false) # Yet the character can
+
+func ui_update():
+	var how_many_tombs = total_tombs - score
+	if how_many_tombs > 0:
+		%UI_tombs/Label.text = "Current Tombs Frozen: " + str(score) + " out of " + str(total_tombs) + ". " + str(how_many_tombs) + " left to go!"
+	else:
+		%UI_tombs/Label.text = "You're free! Run for the door!"
