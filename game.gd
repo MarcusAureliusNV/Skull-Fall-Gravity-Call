@@ -4,7 +4,7 @@ extends Node2D
 var grav_list = ["down", "up", "left", "right"] 
 
 var prev  = "down"
-var score = 0          # Current frozen tombs
+var score = 5 # Current frozen tombs
 var total_tombs = 6
 
 func _on_timer_timeout() -> void: 
@@ -30,6 +30,7 @@ func _on_timer_timeout() -> void:
 	elif elec == "right": phys_vector = Vector2.RIGHT
 	elif elec == "left": phys_vector = Vector2.LEFT 
 	
+	# Ugly line of code that changes the world's config gravity, so it changes for everything in the game at once
 	PhysicsServer2D.area_set_param(get_world_2d().space, PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR, phys_vector)
 
 # This function is called by the tombs when they freeze
@@ -37,10 +38,8 @@ func add_point():
 	score += 1
 	print("Score: ", score)
 	
-	
-	# Not functional yet
-	if score >= total_tombs:
-		print("DOOR OPENED!")
-		# Here we find the door and delete it or disable collision
-		if has_node("Door"):
-			$Door.queue_free() # door is gone
+	if score >= total_tombs: # Functional door! 
+		print("Pillar Cleared!")
+		$Pillar/Visibility.visible = true
+		$Pillar.set_collision_layer_value(8, true) # So tombs can't pass through the door
+		$Pillar.set_collision_layer_value(1, false) # Yet the character can

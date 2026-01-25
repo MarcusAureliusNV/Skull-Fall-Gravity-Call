@@ -4,10 +4,10 @@
 [ext_resource type="Script" uid="uid://blu8gfx0s6pjv" path="res://tomb.gd" id="1_xu6n4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xu6n4"]
-size = Vector2(31, 40.75)
+size = Vector2(31, 32)
 
 [node name="Tomb" type="RigidBody2D" groups=["Tombs"]]
-disable_mode = 2
+collision_layer = 129
 collision_mask = 5
 can_sleep = false
 lock_rotation = true
@@ -16,13 +16,13 @@ max_contacts_reported = 10
 script = ExtResource("1_xu6n4")
 
 [node name="Tiles" type="Sprite2D" parent="."]
-scale = Vector2(2.5833335, 2.5624998)
+position = Vector2(0, 4.7683716e-07)
+scale = Vector2(2.5833335, 2)
 texture = ExtResource("1_3or06")
 region_enabled = true
 region_rect = Rect2(114, 304, 12, 16)
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-position = Vector2(0, -0.375)
 shape = SubResource("RectangleShape2D_xu6n4")
 
 [node name="TombTimer" type="Timer" parent="."]
