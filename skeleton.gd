@@ -5,7 +5,7 @@ const JUMP_F = 300.0 # increased a bit so it feels responsive
 const GRAV = 800.0
 
 const PUSH_FORCE := 50 
-const MIN_PUSH_FORCE := 10.0
+const MIN_PUSH_FORCE := 30.0
 
 var can_double_jump = false # this defines whether you can jump in the air or not
 var grav_dir = "down" # Gravity starts down

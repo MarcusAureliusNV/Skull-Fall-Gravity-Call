@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=4 uid="uid://c3ixhyryo6spb"]
+[gd_scene load_steps=7 format=4 uid="uid://c3ixhyryo6spb"]
 
 [ext_resource type="Texture2D" uid="uid://cq3imyujjnbfy" path="res://Legacy Vania Pack - Village - Update 0.4/Assets/Tiles.png" id="1_ba8gm"]
 [ext_resource type="Script" uid="uid://snqget1huc6m" path="res://door.gd" id="1_v6xrn"]
+[ext_resource type="AudioStream" uid="uid://dlsoqkphoi57r" path="res://Legacy Vania Pack - Village - Update 0.4/Music/victory-1-90174.mp3" id="3_0phs7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hun61"]
 size = Vector2(47, 64)
@@ -453,6 +454,11 @@ tile_set = SubResource("TileSet_0phs7")
 [node name="Timer" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 0.5
+
+[node name="VictorySound" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+stream = ExtResource("3_0phs7")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

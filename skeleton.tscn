@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bp4qwestsm7b7" path="res://Legacy Vania Pack - Village - Update 0.4/Mobs/Skeleton.png" id="2_r6xse"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sv33q"]
-size = Vector2(15, 29)
+size = Vector2(15, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_plk42"]
 atlas = ExtResource("2_r6xse")
@@ -73,15 +73,17 @@ animations = [{
 
 [node name="Skeleton" type="CharacterBody2D"]
 collision_mask = 5
+safe_margin = 0.1
 script = ExtResource("1_plk42")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, -4.5)
+position = Vector2(0.5, -4)
 shape = SubResource("RectangleShape2D_sv33q")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-scale = Vector2(0.90625, 0.90625)
+position = Vector2(0, 0.51562536)
+scale = Vector2(0.90625, 0.88169646)
 sprite_frames = SubResource("SpriteFrames_x6jny")
 animation = &"move"
 autoplay = "idle"
